@@ -1,0 +1,1098 @@
+﻿@model LadaWeb.Models.HomeModel
+@using LadaWeb.Resources
+
+@inject LocService SharedLocalizer
+@{
+    ViewData["Title"] = "Laura Rosales";
+
+    var categoryCount = 0;
+    var experienceCount = 0;
+}
+<div>
+    <div class="responsive-menu">
+        <a href="https://laurarosales.es"> <b>LAURA</b></a>
+        <a id="menu-icon" class="but" href="#">
+            <span class="ti-menu">
+                <img src="https://cdn.laurarosales.es/images/menu.png" alt="image">
+            </span>
+        </a>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="main scroll-page">
+                <section id="home" class="home" style="background: url('@Model.Home.ImageBackgroundSrc'); background-attachment: fixed;background-position: center;
+                        background-repeat: no-repeat;
+                        background-size: cover;">
+                    <div class="home-overlay"></div>
+                    <div class="home-content" id="scroll-down">
+                        <div class="home-intro">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <a class="logo" href="https://laurarosales.es"><img style="border: 3px solid #07cbf5;-moz-transform: scaleX(-1);-o-transform: scaleX(-1);-webkit-transform: scaleX(-1);transform: scaleX(-1); filter: FlipH; -ms-filter: " FlipH";" src="@Model.Home.ImageLogoSrc" alt="logo" width="260" height="260"></a>
+                                </div>
+                                <div class="col-sm-9">
+                                    <h2>@Model.Home.H2</h2>
+                                    <h1>@Model.Home.H1</h1>
+                                    <div class="type-wrap">
+                                        <div id="typed-strings">
+                                            @foreach (var str in Model.Home.TypedStrings.Split(','))
+                                            {
+                                                <span>@str</span>
+                                            }
+                                        </div>
+                                        <span id="typed" style="white-space:pre;"></span>
+                                    </div>
+                                    <!--<a class="download-link hvr-shutter-out-horizontal" href="">¿Descargar mi CV?</a>-->
+                                </div>
+                            </div>
+                        </div>
+                        <a class="scroll-down page-scroll" title="Scroll Down" href="#about"><i class="fa fa-circle" aria-hidden="true"></i></a>
+                    </div>
+                    <div class="menu_area" id="stick_menu">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <nav class="navbar navbar-default" role="navigation">
+                                        <div class="container-fluid">
+                                            <div class="navbar-collapse mainnavmenu" id="bs-example-navbar-collapse-1">
+                                                <div id="menu-center">
+                                                    <ul class="nav navbar-nav mainnav">
+
+                                                        @foreach (var category in Model.Categories)
+                                                        {
+                                                            if ((bool)category.Active && categoryCount == 0)
+                                                            {
+                                                                <li class="active" active>
+                                                                    <a href="#@category.Href" class="page-scroll">@category.Name <span class="sr-only">(current)</span></a>
+                                                                </li>
+                                                            }
+                                                            else if ((bool)category.Active)
+                                                            {
+                                                                <li>
+                                                                    <a href="#@category.Href" class="page-scroll">@category.Name </a>
+                                                                </li>
+                                                            }
+                                                            categoryCount++;
+                                                        }
+                                                        <li>
+                                                            @using (Html.BeginForm("Spanish", "Home", FormMethod.Post))
+                                                            {
+                                                                <button type="submit" style="display:contents">
+                                                                    <img src="~/images/spanish.png" height="40" width="40" style="border-radius: 50%; margin-top: 5px; margin-left: 5px;" />
+                                                                </button>
+                                                            }
+                                                        </li>
+                                                        <li>
+                                                            @using (Html.BeginForm("English", "Home", FormMethod.Post))
+                                                            {
+                                                                <button type="submit" style="display:contents">
+                                                                    <img src="~/images/english.png" height="40" width="40" style="border-radius: 50%; margin-top: 5px; margin-left: 5px;" />
+                                                                </button>
+                                                            }
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <div>
+                    @if ((bool)Model.Categories[1].Active)
+                    {
+                        <section id="about" class="section wow fadeInUpBig">
+                            <div class="container-section">
+                                <div class="row">
+                                    <div class="section-title">
+                                        <h4> @SharedLocalizer.GetLocalizedHtmlString("AboutMe")</h4>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3 profile-pic">
+                                        <a href="https://laurarosales.es" class="profile-img"><img src="@Model.About.ImageProfileSrc" alt="Laura Rodriguez Rosales"></a>
+                                        <h3 class="info-position">@Model.About.Title</h3>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <div class="about-info row">
+                                            <div class="col-sm-6 info-block wow fadeInRight">
+                                                <div class="info-icon hvr-trim"> <i class="fa fa-user" aria-hidden="true"></i></div>
+                                                <div class="info-text">
+                                                    <span>@SharedLocalizer.GetLocalizedHtmlString("Name")</span>
+                                                    @Model.About.Name
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6 info-block wow fadeInRight">
+                                                <div class="info-icon hvr-trim"> <i class="fa fa-envelope" aria-hidden="true"></i></div>
+                                                <div class="info-text">
+                                                    <span>@SharedLocalizer.GetLocalizedHtmlString("Email")</span>
+                                                    @Model.About.Email
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6 info-block wow fadeInRight">
+                                                <div class="info-icon hvr-trim"><i class="fa fa-volume-control-phone" aria-hidden="true"></i></div>
+                                                <div class="info-text">
+                                                    <span>@SharedLocalizer.GetLocalizedHtmlString("Phone")</span>
+                                                    @Model.About.Phone
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6 info-block wow fadeInRight">
+                                                <div class="info-icon hvr-trim"> <i class="fa fa-calendar" aria-hidden="true"></i></div>
+                                                <div class="info-text">
+                                                    <span>@SharedLocalizer.GetLocalizedHtmlString("BirthDate")</span>
+                                                    @Model.About.Birth
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6 info-block wow fadeInRight">
+                                                <div class="info-icon hvr-trim"><i class="fa fa-map-marker" aria-hidden="true"></i> </div>
+                                                <div class="info-text">
+                                                    <span>@SharedLocalizer.GetLocalizedHtmlString("Address")</span>
+                                                    @Model.About.Location
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6 info-block wow fadeInRight">
+                                                <div class="info-icon hvr-trim"> <i class="fa fa-flag" aria-hidden="true"></i></div>
+                                                <div class="info-text">
+                                                    <span>@SharedLocalizer.GetLocalizedHtmlString("Nacionality")</span>
+                                                    @Model.About.Nacionality
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-12 social-profiles">
+                                                <span>@SharedLocalizer.GetLocalizedHtmlString("SocialNetwork")</span>
+                                                <a class="hvr-pulse-grow linkedin" target="_blank" href="https://www.linkedin.com/in/laura-rodríguez-rosales-b14736116/" title="Linkedin">
+                                                    <i class="fa fa-linkedin" aria-hidden="true"></i>
+                                                </a>
+                                                <a class="hvr-pulse-grow instagram" target="_blank" href="https://www.instagram.com/misslaurarosales/" title="Instagram">
+                                                    <i class="fa fa-instagram" aria-hidden="true"></i>
+                                                </a>
+                                            </div>
+
+                                            <div class="col-sm-12 about-content">
+                                                <p>
+                                                    @Model.About.Text
+                                                </p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </section>
+                    }
+
+                    @if ((bool)Model.Categories[2].Active)
+                    {
+                        <section id="skills" class="section wow fadeInUp">
+                            <div class="container-section">
+                                <div class="row">
+                                    <div class="section-title">
+                                        <h4>Habilidades</h4>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-6 skill">
+                                        <h2>Habilidades con harina</h2>
+
+                                        <div class="progress">
+                                            <div class="lead"> <i class="fa fa-desktop" aria-hidden="true"></i> Amasado</div>
+                                            <div class="progress-bar wow fadeInLeft" data-progress="75%" style="width: 75%;" data-wow-duration="1.5s" data-wow-delay="1.2s"> <span>75%</span></div>
+                                        </div>
+                                        <div class="progress">
+                                            <div class="lead"> <i class="fa fa-mobile" aria-hidden="true"></i> El que tengo </div>
+                                            <div class="progress-bar wow fadeInLeft" data-progress="75%" style="width: 75%;" data-wow-duration="1.5s" data-wow-delay="1.2s"> <span>75%</span></div>
+                                        </div>
+                                        <div class="progress">
+                                            <div class="lead"><i class="fa fa-camera" aria-hidden="true"></i> aqui colgado </div>
+                                            <div class="progress-bar wow fadeInLeft" data-progress="80%" style="width: 80%;" data-wow-duration="1.5s" data-wow-delay="1.2s"><span>80%</span> </div>
+                                        </div>
+                                        <!--<div class="progress">
+                                            <div class="lead"> <i class="fa fa-server" aria-hidden="true"></i> Server Administration </div>
+                                            <div class="progress-bar wow fadeInLeft" data-progress="97%" style="width: 97%;" data-wow-duration="1.5s" data-wow-delay="1.2s"><span>97%</span> </div>
+                                        </div>-->
+                                    </div>
+
+                                    <div class="col-sm-6 skill">
+                                        <h2>Habilidades de horno</h2>
+                                        <div class="progress">
+                                            <div class="lead"><i class="fa fa-comments" aria-hidden="true"></i> horno 1 </div>
+                                            <div class="progress-bar wow fadeInLeft" data-progress="75%" style="width: 75%;" data-wow-duration="1.5s" data-wow-delay="1.2s"> <span>75%</span></div>
+                                        </div>
+
+                                        <div class="progress">
+                                            <div class="lead"><i class="fa fa-users" aria-hidden="true"></i> horno 1 </div>
+                                            <div class="progress-bar wow fadeInLeft" data-progress="80%" style="width: 80%;" data-wow-duration="1.5s" data-wow-delay="1.2s"><span>80%</span> </div>
+                                        </div>
+                                        <div class="progress">
+                                            <div class="lead"><i class="fa fa-trophy" aria-hidden="true"></i> horno 1  </div>
+                                            <div class="progress-bar wow fadeInLeft" data-progress="97%" style="width: 97%;" data-wow-duration="1.5s" data-wow-delay="1.2s"><span>97%</span> </div>
+                                        </div>
+                                        <!--<div class="progress">
+                                            <div class="lead"><i class="fa fa-clock-o" aria-hidden="true"></i> Time Management </div>
+                                            <div class="progress-bar wow fadeInLeft" data-progress="70%" style="width: 70%;" data-wow-duration="1.5s" data-wow-delay="1.2s"><span>70%</span> </div>
+                                        </div>-->
+
+                                    </div>
+                                </div>
+
+                                <div class="row skill-language">
+
+                                    <h2>Idiomas</h2>
+
+                                    <div class="col-sm-12">
+                                        <div class="skills wow fadeInUp">
+                                            <div class="col-md-3">
+                                                <div class="percentage easyPieChart" data-percent="90" data-delay="100"><span>90</span>%<canvas width="165" height="165"></canvas></div>
+                                                <small>Inglés</small>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="percentage easyPieChart" data-percent="20"><span>20</span>%<canvas width="165" height="165"></canvas></div>
+                                                <small>Frances</small>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="percentage easyPieChart" data-percent="100"><span>100</span>%<canvas width="165" height="165"></canvas></div>
+                                                <small>Español</small>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="percentage easyPieChart" data-percent="100"><span>100</span>%<canvas width="165" height="165"></canvas></div>
+                                                <small>Balleno</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    }
+
+                    @if ((bool)Model.Categories[3].Active)
+                    {
+                        <section id="resumes" class="section wow fadeInUp">
+                            <div class="container-section">
+                                <div class="row">
+                                    <div class="section-title">
+                                        <h4>@SharedLocalizer.GetLocalizedHtmlString("Experience")</h4>
+                                    </div>
+                                </div>
+                                <div class="resume-section education">
+                                    <div class="timeline-container">
+                                        @foreach (var experience in Model.Experiences)
+                                        {
+                                            <div class="timeline-block wow @(experienceCount % 2 == 0 ? "fadeInLeft" : "fadeInRight")">
+                                                <div class="timeline-img" data-anim-effect="zoomIn">
+                                                    <i>@experience.Year</i>
+                                                </div>
+
+                                                <div class="timeline-content" data-anim-effect="@(experienceCount % 2 == 0 ? "fadeInLeft" : "fadeInRight")">
+                                                    <h2>@experience.Title </h2>
+                                                    <p>@experience.Restaurant </p>
+                                                    <p>@Html.Raw(experience.Text) </p>
+                                                </div>
+                                            </div>
+                                            experienceCount++;
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    }
+
+                    @if ((bool)Model.Categories[4].Active)
+                    {
+                        <section id="services" class="section wow fadeInUp">
+                            <div class="container-section">
+                                <div class="row">
+                                    <div class="section-title">
+                                        <h4>Servicios</h4>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4 wow flipInX" data-delay="100">
+                                        <div class="service-box">
+                                            <a href="#"><span class="service-icon pull-left"><i class="fa fa-code"></i></span></a>
+                                            <div class="service-box-content">
+                                                <h3>Cocina a domicilio</h3>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ultricies vestibulum Graphic river molestie.</p>
+                                            </div>
+                                        </div>
+                                    </div><!--/ End first service -->
+                                    <div class="col-md-4 col-sm-4 wow flipInY" data-delay="100">
+                                        <div class="service-box">
+                                            <a href="#"><span class="service-icon pull-left"><i class="fa fa-paint-brush"></i></span></a>
+                                            <div class="service-box-content">
+                                                <h3>Diseño de menu</h3>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ultricies vestibulum Graphic river molestie.</p>
+                                            </div>
+                                        </div>
+                                    </div><!--/ End 2nd service -->
+                                    <div class="col-md-4 col-sm-4 wow flipInX" data-delay="100">
+                                        <div class="service-box">
+                                            <a href="#"><span class="service-icon pull-left"><i class="fa fa-briefcase"></i></span></a>
+                                            <div class="service-box-content">
+                                                <h3>Catering</h3>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ultricies vestibulum Graphic river molestie.</p>
+                                            </div>
+                                        </div>
+                                    </div><!--/ End 3rd service -->
+                                </div><!--/ service box row end -->
+
+
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4 wow flipInY" data-delay="100">
+                                        <div class="service-box">
+                                            <a href="#"><span class="service-icon pull-left"><i class="fa fa-mobile"></i></span></a>
+                                            <div class="service-box-content">
+                                                <h3>Telefono movil</h3>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ultricies vestibulum Graphic river molestie.</p>
+                                            </div>
+                                        </div>
+                                    </div><!--/ End first service -->
+                                    <div class="col-md-4 col-sm-4 wow flipInX" data-delay="100">
+                                        <div class="service-box">
+                                            <a href="#"><span class="service-icon pull-left"><i class="fa fa-server"></i></span></a>
+                                            <div class="service-box-content">
+                                                <h3>otro icono way</h3>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ultricies vestibulum Graphic river molestie.</p>
+                                            </div>
+                                        </div>
+                                    </div><!--/ End 2nd service -->
+                                    <div class="col-md-4 col-sm-4 wow flipInY" data-delay="100">
+                                        <div class="service-box">
+                                            <a href="#"><span class="service-icon pull-left"><i class="fa fa-camera-retro"></i></span></a>
+                                            <div class="service-box-content">
+                                                <h3>camara de fotos</h3>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ultricies vestibulum Graphic river molestie.</p>
+                                            </div>
+                                        </div>
+                                    </div><!--/ End 3rd service -->
+                                </div><!--/ service box row end -->
+                            </div>
+                        </section>
+                    }
+
+                    @if ((bool)Model.Categories[5].Active)
+                    {
+                        <section id="portfolio" class="section wow fadeInUp">
+                            <div class="container-section">
+                                <div class="row">
+                                    <div class="section-title">
+                                        <h4>@SharedLocalizer.GetLocalizedHtmlString("Cakes")</h4>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="grid">
+                                        <div class="col-lg-4 col-md-6 col-sm-12" style="margin-top:30px">
+                                            <figcaption>
+                                                <video controls>
+                                                    <source src="https://cdn.laurarosales.es/images/work/sweet-cake.mov" type="video/mp4">
+                                                </video>
+                                            </figcaption>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12" style="margin-top:30px">
+                                            <figcaption>
+                                                <video controls>
+                                                    <source src="https://cdn.laurarosales.es/images/work/video-tarta.mov" type="video/mp4">
+                                                </video>
+                                            </figcaption>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="tartas" href="https://cdn.laurarosales.es/images/workfull/2.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/2.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="tartas" href="https://cdn.laurarosales.es/images/workfull/6.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/6.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="tartas" href="https://cdn.laurarosales.es/images/workfull/27.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/27.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="tartas" href="https://cdn.laurarosales.es/images/workfull/34.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/34.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="tartas" href="https://cdn.laurarosales.es/images/workfull/36.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/36.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="tartas" href="https://cdn.laurarosales.es/images/workfull/37.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/37.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="tartas" href="https://cdn.laurarosales.es/images/workfull/50.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/50.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="tartas" href="https://cdn.laurarosales.es/images/workfull/51.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/51.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="tartas" href="https://cdn.laurarosales.es/images/workfull/52.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/52.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="tartas" href="https://cdn.laurarosales.es/images/workfull/53.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/53.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="tartas" href="https://cdn.laurarosales.es/images/workfull/72.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/72.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="tartas" href="https://cdn.laurarosales.es/images/workfull/73.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/73.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="tartas" href="https://cdn.laurarosales.es/images/workfull/74.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/74.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="tartas" href="https://cdn.laurarosales.es/images/workfull/75.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/75.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="tartas" href="https://cdn.laurarosales.es/images/workfull/76.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/76.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="tartas" href="https://cdn.laurarosales.es/images/workfull/77.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/77.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="tartas" href="https://cdn.laurarosales.es/images/workfull/78.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/78.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="tartas" href="https://cdn.laurarosales.es/images/workfull/84.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/84.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="container-section" style="margin-top:25px">
+                                <div class="row">
+                                    <div class="section-title">
+                                        <h4>@SharedLocalizer.GetLocalizedHtmlString("Deserts")</h4>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="grid">
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="postres" href="https://cdn.laurarosales.es/images/workfull/9.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/9.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="postres" href="https://cdn.laurarosales.es/images/workfull/10.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/10.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="postres" href="https://cdn.laurarosales.es/images/workfull/14.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/14.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="postres" href="https://cdn.laurarosales.es/images/workfull/17.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/17.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="postres" href="https://cdn.laurarosales.es/images/workfull/18.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/18.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="postres" href="https://cdn.laurarosales.es/images/workfull/21.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/21.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <!--<div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="postres" href="https://cdn.laurarosales.es/images/workfull/29.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/29.jpg" alt="img"/>
+                                                </a>
+                                            </figure>
+                                        </div>-->
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="postres" href="https://cdn.laurarosales.es/images/workfull/30.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/30.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="postres" href="https://cdn.laurarosales.es/images/workfull/31.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/31.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="postres" href="https://cdn.laurarosales.es/images/workfull/32.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/32.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="postres" href="https://cdn.laurarosales.es/images/workfull/35.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/35.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="postres" href="https://cdn.laurarosales.es/images/workfull/47.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/47.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="postres" href="https://cdn.laurarosales.es/images/workfull/48.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/48.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="postres" href="https://cdn.laurarosales.es/images/workfull/60.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/60.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="postres" href="https://cdn.laurarosales.es/images/workfull/61.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/61.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="postres" href="https://cdn.laurarosales.es/images/workfull/63.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/63.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="postres" href="https://cdn.laurarosales.es/images/workfull/71.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/71.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="postres" href="https://cdn.laurarosales.es/images/workfull/79.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/79.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="postres" href="https://cdn.laurarosales.es/images/workfull/81.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/81.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="container-section" style="margin-top:25px">
+                                <div class="row">
+                                    <div class="section-title">
+                                        <h4>@SharedLocalizer.GetLocalizedHtmlString("Mignardises")</h4>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="grid">
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="mignardises" href="https://cdn.laurarosales.es/images/workfull/12.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/12.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <!--<div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="mignardises" href="https://cdn.laurarosales.es/images/workfull/13.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/13.jpg" alt="img"/>
+                                                </a>
+                                            </figure>
+                                        </div>-->
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="mignardises" href="https://cdn.laurarosales.es/images/workfull/16.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/16.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="mignardises" href="https://cdn.laurarosales.es/images/workfull/20.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/20.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="mignardises" href="https://cdn.laurarosales.es/images/workfull/23.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/23.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="mignardises" href="https://cdn.laurarosales.es/images/workfull/24.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/24.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="mignardises" href="https://cdn.laurarosales.es/images/workfull/25.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/25.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="mignardises" href="https://cdn.laurarosales.es/images/workfull/26.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/26.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="mignardises" href="https://cdn.laurarosales.es/images/workfull/28.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/28.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="mignardises" href="https://cdn.laurarosales.es/images/workfull/82.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/82.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="container-section" style="margin-top:25px">
+                                <div class="row">
+                                    <div class="section-title">
+                                        <h4>@SharedLocalizer.GetLocalizedHtmlString("Amenities")</h4>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="grid">
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="amenities" href="https://cdn.laurarosales.es/images/workfull/4.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/4.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="amenities" href="https://cdn.laurarosales.es/images/workfull/33.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/33.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="amenities" href="https://cdn.laurarosales.es/images/workfull/38.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/38.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="amenities" href="https://cdn.laurarosales.es/images/workfull/46.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/46.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="amenities" href="https://cdn.laurarosales.es/images/workfull/49.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/49.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="amenities" href="https://cdn.laurarosales.es/images/workfull/56.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/56.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="amenities" href="https://cdn.laurarosales.es/images/workfull/69.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/69.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="amenities" href="https://cdn.laurarosales.es/images/workfull/70.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/70.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="container-section" style="margin-top:25px">
+                                <div class="row">
+                                    <div class="section-title">
+                                        <h4>@SharedLocalizer.GetLocalizedHtmlString("Others")</h4>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="grid">
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="otros" href="https://cdn.laurarosales.es/images/workfull/3.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/3.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="otros" href="https://cdn.laurarosales.es/images/workfull/5.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/5.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="otros" href="https://cdn.laurarosales.es/images/workfull/33.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/33.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="otros" href="https://cdn.laurarosales.es/images/workfull/38.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/38.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="otros" href="https://cdn.laurarosales.es/images/workfull/39.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/39.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="otros" href="https://cdn.laurarosales.es/images/workfull/42.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/42.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="otros" href="https://cdn.laurarosales.es/images/workfull/44.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/44.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="otros" href="https://cdn.laurarosales.es/images/workfull/45.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/45.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="otros" href="https://cdn.laurarosales.es/images/workfull/57.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/57.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="otros" href="https://cdn.laurarosales.es/images/workfull/62.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/62.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="otros" href="https://cdn.laurarosales.es/images/workfull/64.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/64.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="otros" href="https://cdn.laurarosales.es/images/workfull/65.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/65.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="otros" href="https://cdn.laurarosales.es/images/workfull/67.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/67.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <figure class="effect-winston wow fadeInUp">
+                                                <a class="fancybox" data-fancybox-group="otros" href="https://cdn.laurarosales.es/images/workfull/83.jpg">
+                                                    <img src="https://cdn.laurarosales.es/images/work/83.jpg" alt="img" />
+                                                </a>
+                                            </figure>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    }
+
+                    @if ((bool)Model.Categories[6].Active)
+                    {
+                        <section id="blog" class="section wow fadeInUp">
+                            <div class="container-section">
+                                <div class="row">
+                                    <div class="section-title">
+                                        <h4>Noticias del blog </h4>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="latest-blog">
+                                        <!-- single-latest-blog start -->
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <div class="home-post">
+                                                <div class="post-img">
+                                                    <a href="#"><img src="https://cdn.laurarosales.es/images/blog/1.jpg" alt="image"></a>
+                                                </div>
+                                                <div class="post-content">
+                                                    <a class="post-title" href="#">Post 1 titulo</a>
+                                                    <p>
+                                                        Donec vitae hendrerit arcu, sit amet faucibus nisl. Cras pretium arcu ex. Aenean posuere libero eu augue condimentum rhoncus. Praesent                                        <br>
+                                                    </p>
+                                                </div>
+                                                <div class="post-footer">
+                                                    <div class="row">
+                                                        <a href="#" class="col-sm-6"><i class="fa fa-clock-o" aria-hidden="true"></i> SEP, 23 2016</a>
+                                                        <a href="#" class="col-sm-3 footer-r heart"><i class="fa fa-heart" aria-hidden="true"></i> 100</a>
+                                                        <a href="#" class="col-sm-3 footer-r"><i class="fa fa-comments-o" aria-hidden="true"></i> 14</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- single-latest-blog end -->
+                                        <!-- single-latest-blog start -->
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <div class="home-post">
+                                                <div class="post-img">
+                                                    <a href="#"><img src="https://cdn.laurarosales.es/images/blog/2.jpg" alt="image"></a>
+                                                </div>
+                                                <div class="post-content">
+                                                    <a class="post-title" href="#">Post 2 titulo</a>
+                                                    <p>
+                                                        Donec vitae hendrerit arcu, sit amet faucibus nisl. Cras pretium arcu ex. Aenean posuere libero eu augue condimentum rhoncus. Praesent                                        <br>
+                                                    </p>
+                                                </div>
+                                                <div class="post-footer">
+                                                    <div class="row">
+                                                        <a href="#" class="col-sm-6"><i class="fa fa-clock-o" aria-hidden="true"></i> SEP, 23 2016</a>
+                                                        <a href="#" class="col-sm-3 footer-r heart"><i class="fa fa-heart" aria-hidden="true"></i> 100</a>
+                                                        <a href="#" class="col-sm-3 footer-r"><i class="fa fa-comments-o" aria-hidden="true"></i> 14</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- single-latest-blog end -->
+                                        <!-- single-latest-blog start -->
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <div class="home-post">
+                                                <div class="post-img">
+                                                    <a href="#"><img src="https://cdn.laurarosales.es/images/blog/3.jpg" alt="image"></a>
+                                                </div>
+                                                <div class="post-content">
+                                                    <a class="post-title" href="#">Post 3 titulo</a>
+                                                    <p>
+                                                        Donec vitae hendrerit arcu, sit amet faucibus nisl. Cras pretium arcu ex. Aenean posuere libero eu augue condimentum rhoncus. Praesent                                        <br>
+                                                    </p>
+                                                </div>
+                                                <div class="post-footer">
+                                                    <div class="row">
+                                                        <a href="#" class="col-sm-6"><i class="fa fa-clock-o" aria-hidden="true"></i> SEP, 23 2016</a>
+                                                        <a href="#" class="col-sm-3 footer-r heart"><i class="fa fa-heart" aria-hidden="true"></i> 100</a>
+                                                        <a href="#" class="col-sm-3 footer-r"><i class="fa fa-comments-o" aria-hidden="true"></i> 14</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- single-latest-blog end -->
+
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    }
+
+                    @if ((bool)Model.Categories[7].Active)
+                    {
+                        <section id="contact" class="section wow fadeInUp">
+                            <div class="container-section">
+                                <div class="row">
+                                    <div class="section-title">
+                                        <h4>@SharedLocalizer.GetLocalizedHtmlString("Contact") </h4>
+                                    </div>
+                                </div>
+                                <!--<div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 map" id="map" style=" pointer-events: none;"></div>
+                                </div>-->
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <h2>@SharedLocalizer.GetLocalizedHtmlString("ContactAddress")</h2>
+                                        <div class="contact-block wow fadeInLeft">
+                                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                            <p><b>@SharedLocalizer.GetLocalizedHtmlString("Address"): </b> @Model.About.Location</p>
+                                        </div>
+                                        <div class="contact-block wow fadeInRight">
+                                            <i class="fa fa-phone" aria-hidden="true"></i>
+                                            <p><b>@SharedLocalizer.GetLocalizedHtmlString("Phone"): </b> @Model.About.Phone</p>
+                                        </div>
+                                        <div class="contact-block wow fadeInLeft">
+                                            <i class="fa fa-whatsapp" aria-hidden="true"></i>
+                                            <p><b>WhatsApp: </b> @Model.About.Phone</p>
+                                        </div>
+                                        <div class="contact-block wow fadeInRight">
+                                            <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                                            <p><b>@SharedLocalizer.GetLocalizedHtmlString("Email"): </b> <a href="mailto:@Model.About.Email">@Model.About.Email</a></p>
+                                        </div>
+                                        <div class="contact-block wow fadeInLeft">
+                                            <div class="social-profiles">
+                                                <a class="hvr-pulse-grow linkedin" target="_blank" href="https://www.linkedin.com/in/laura-rodríguez-rosales-b14736116/" title="Linkedin">
+                                                    <i class="fa fa-linkedin" aria-hidden="true"></i>
+                                                </a>
+                                                <a class="hvr-pulse-grow instagram" target="_blank" href="https://www.instagram.com/misslaurarosales/" title="Instagram">
+                                                    <i class="fa fa-instagram" aria-hidden="true"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <h2>@SharedLocalizer.GetLocalizedHtmlString("WriteMe")</h2>
+                                        <div id="show_contact_msg">
+
+                                        </div>
+                                        @using (Html.BeginForm("ContactMe", "Home", FormMethod.Post))
+                                        {
+                                            <input type="text" required name="Name" id="contact_name" placeholder="@SharedLocalizer.GetLocalizedHtmlString("YourName")" class="wow fadeInRight">
+                                            <input type="email" required name="Email" id="contact_email" placeholder="@SharedLocalizer.GetLocalizedHtmlString("Email")" class="wow fadeInRight">
+                                            <input type="text" name="Phone" id="contact_phone" placeholder="@SharedLocalizer.GetLocalizedHtmlString("Phone")" class="wow fadeInRight">
+                                            <textarea name="Message" required id="contact_text" placeholder="@SharedLocalizer.GetLocalizedHtmlString("YourMessage")" class="wow fadeInRight"></textarea>
+                                            <button class="btn btn-primary wow fadeInRight" type="submit" value="@SharedLocalizer.GetLocalizedHtmlString("Send")">@SharedLocalizer.GetLocalizedHtmlString("Send")</button>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="copyright">
+            <p>
+                @SharedLocalizer.GetLocalizedHtmlString("Copyright") <a target="_blank" href="https://www.linkedin.com/in/alvaro-rodrigo-romero-222134a0/">Alvaro Rodrigo Romero</a>
+            </p>
+        </div>
+    </div>
+</div>
